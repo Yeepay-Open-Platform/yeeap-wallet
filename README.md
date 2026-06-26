@@ -2,7 +2,7 @@
 
 > 易宝 YEEAP 钱包支付技能 —— 让 AI Agent 安全地发起 YEEAP 支付交易。
 
-`yeeap-wallet` 是一个面向 AI Agent（Claude Code、Cursor、WorkBuddy 等）的支付技能包。它将 YEEAP 钱包的支付、授权与查询能力封装为可被 Agent 调用的标准化工作流，并通过 `yeeap-cli` 与易宝 Open API 交互。
+`yeeap-wallet` 是一个面向 AI Agent（目前只支持Cursor、WorkBuddy）的支付技能包。它将 YEEAP 钱包的支付、授权与查询能力封装为可被 Agent 调用的标准化工作流，并通过 `yeeap-cli` 与易宝 Open API 交互。
 
 由易宝 YEEAP 团队官方维护。
 
