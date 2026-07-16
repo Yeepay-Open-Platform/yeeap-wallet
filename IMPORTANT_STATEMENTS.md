@@ -12,12 +12,12 @@
 
 ## CLI 依赖追溯 (CLI Provenance)
 
-本技能唯一运行时依赖为 npm 包 **`yeeap-cli`**（由 `permissions.install` 预装，版本见 `SKILL.md` frontmatter）。运行时固定使用 `~/.yeeap/npm-cache` 作为 npm 缓存目录，避免每次执行创建随机临时缓存目录。
+本技能唯一运行时依赖为 Go 二进制 **`yeeap-cli`**。首次缺失时，安装器从本 Skill 同一 GitHub 仓的 Release 下载对应平台二进制并验证 SHA-256；正常支付不依赖 npm、npx 或 Node。
 
 | 属性 | 说明 |
 |------|------|
-| **NPM 包** | [`yeeap-cli`](https://www.npmjs.com/package/yeeap-cli) |
-| **安装声明** | `yeeap-cli@wallet-stable`，YEEAP 官方支付稳定版 dist-tag，不使用 `@latest` |
+| **二进制发布源** | [`Yeepay-Open-Platform/yeeap-wallet Releases`](https://github.com/Yeepay-Open-Platform/yeeap-wallet/releases) |
+| **安装方式** | `install.sh` 下载对应平台包并校验 `checksums.txt` |
 
 ---
 
@@ -54,7 +54,7 @@ yeeap-cli 鉴权采用**一次性短效会话令牌 + 服务端签权**模型，
 
 | 目的地 | 用途 |
 |--------|------|
-| `registry.npmjs.org` | Preflight、安装/执行 `yeeap-cli` |
+| `github.com` / `api.github.com` | 首次安装时下载和校验 `yeeap-cli` Release |
 | `ap.yeepay.com/yeeap` | 支付下单、授权、查询（Open API） |
 
 ---
