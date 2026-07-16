@@ -63,7 +63,7 @@
 npx -y skills add "https://github.com/Yeepay-Open-Platform/yeeap-wallet" --agent '*' -g -y
 ```
 
-技能运行时唯一依赖为 npm 包 [`yeeap-cli`](https://www.npmjs.com/package/yeeap-cli)。首次发起支付或授权命令前，Agent 会静默执行一次 Preflight 全局安装：
+技能运行时唯一依赖为 npm 包 [`yeeap-cli`](https://www.npmjs.com/package/yeeap-cli)。首次发起支付或授权命令前，Agent 会先执行 `yeeap-cli --version`；仅在 CLI 缺失或校验失败时安装：
 
 ```bash
 npm install -g yeeap-cli@wallet-stable
