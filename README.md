@@ -27,7 +27,7 @@
 - 🔐 **人类确认（Human-in-the-loop）**：所有引发实际授权或支付的 URL 必须展示给用户并等待明确确认，**绝不轮询**。
 - 🪙 **一次性短效令牌**：采用「一次性短效会话令牌 + 服务端签权」模型，全程**不索要支付密码或私钥**。
 - 🧩 **凭证托管**：`payCredential` 由 CLI 自主写回本地订单文件，Agent 不得读取原文对外展示。
-- 🔒 **稳定版本**：首次缺失时从官方 GitHub Release 下载当前稳定版 Go 二进制，并校验 SHA-256。
+- 🔒 **版本锁定**：固定使用 `yeeap-cli@wallet-stable` 官方稳定版 dist-tag，不使用 `@latest`。
 - 🧭 **结构化分流**：支付结果按「凭证获取 → 授权回退 → 状态路由」的优先级规则逐步处理，覆盖成功 / 处理中 / 失败 / 订单不存在等全部分支。
 
 ---
@@ -63,13 +63,13 @@
 npx -y skills add "https://github.com/Yeepay-Open-Platform/yeeap-wallet" --agent '*' -g -y
 ```
 
-技能运行时唯一依赖为 Go 二进制 `yeeap-cli`。首次发起支付或授权命令前，Agent 先校验本地 CLI；仅在缺失时执行一次官方安装器：
+技能运行时唯一依赖为 npm 包 [`yeeap-cli`](https://www.npmjs.com/package/yeeap-cli)。首次发起支付或授权命令前，Agent 会静默执行一次 Preflight 全局安装：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Yeepay-Open-Platform/yeeap-wallet/main/install.sh | bash
+npm install -g yeeap-cli@wallet-stable
 ```
 
-安装器下载同仓 GitHub Release 并校验 SHA-256。Preflight 之后的所有命令**直接调用 `yeeap-cli`**，不依赖 Node、npm 或 npx。
+Preflight 之后的所有命令**直接调用 `yeeap-cli`**，不再使用 `npx`。
 
 ---
 
@@ -119,7 +119,7 @@ curl -fsSL https://raw.githubusercontent.com/Yeepay-Open-Platform/yeeap-wallet/m
 - **禁止自行探测身份上下文**：不得执行 `env`、`printenv`、读取 shell profile / `.env` / Agent 配置来推断 `agentId` / `loginAccount`；不得手动设置 `AGENT_SESSION_ID` 等变量。身份缺失时只展示 CLI 错误并停止。
 - **禁止复用旧身份**：不得使用其他 Agent 留下的 pending auth 或 token 作为真实支付身份；只允许使用 `pay-context`、`auth-init-context`、`check-auth-context` 与 `pay-query`。
 - **链接脱敏**：展示授权链接或日志原文时，可将 token、sign 等会话查询参数简写为 `***`。
-- **出站网络**：仅访问 GitHub Release（首次安装 CLI）与 `ap.yeepay.com/yeeap`（Open API）。
+- **出站网络**：仅访问 `registry.npmjs.org`（安装/执行 CLI）与 `ap.yeepay.com/yeeap`（Open API）。
 
 完整安全约束见 [IMPORTANT_STATEMENTS.md](IMPORTANT_STATEMENTS.md)。
 
