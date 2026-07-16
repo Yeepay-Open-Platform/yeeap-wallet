@@ -12,7 +12,7 @@
 
 ## CLI 依赖追溯 (CLI Provenance)
 
-本技能唯一运行时依赖为 npm 包 **`yeeap-cli`**（由 `permissions.install` 预装，版本见 `SKILL.md` frontmatter）。运行时固定使用 `~/.yeeap/npm-cache` 作为 npm 缓存目录，避免每次执行创建随机临时缓存目录。
+本技能唯一运行时依赖为 npm 包 **`yeeap-cli`**（由 `permissions.install` 预装，版本见 `SKILL.md` frontmatter）。运行时直接复用本地 CLI；仅在 CLI 缺失或校验失败时安装。
 
 | 属性 | 说明 |
 |------|------|
